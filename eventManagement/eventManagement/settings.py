@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'paypal.standard.ipn',
     'fundraiser',
-
+    'userActivity',
+    'background_task',
 
 ]
 
@@ -62,7 +63,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'eventManagement.urls'
-
+emailpassword = "riyajain04"
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -105,27 +106,14 @@ CHANNEL_LAYERS = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dbi',
+        'NAME': 'db2',
         'USER': 'root',
-        'PASSWORD': 'riyamysql',
+        'PASSWORD': 'q1w2e3r4',
         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
         'PORT': '3306',
     }
 
 }
-
-
-# DATABASES = {
-#     'default': {
-#         'NAME': 'db',
-#         'ENGINE': 'mysql.connector.django',
-#         'USER': 'root',
-#         'PASSWORD': 'riyamysql',
-#         'OPTIONS': {
-#           'autocommit': True,
-#         },
-#     }
-# }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#aupip3 install mysql-connect-pythonth-password-validators
@@ -170,11 +158,18 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # EMAIL_HOST = 'localhost'
 # EMAIL_PORT = 1025
+#
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST_USER = 'projectcirclr@gmail.com'
+# EMAIL_HOST_PASSWORD = 'circlr@147'
+# EMAIL_PORT = 587
 
-EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'projectcirclr@gmail.com'
-EMAIL_HOST_PASSWORD = 'circlr@147'
+EMAIL_USE_TLS = True
 EMAIL_PORT = 587
+EMAIL_HOST_USER = '29riyajain@gmail.com'
+EMAIL_HOST_PASSWORD = emailpassword
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

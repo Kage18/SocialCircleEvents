@@ -4,18 +4,23 @@ from shop.models import Product
 from datetime import datetime
 # from django.utils.timezone
 import django.utils.timezone as p
-
+from django.core.exceptions import ValidationError
 # Create your models here.
+class categories(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
 
 
 class event(models.Model):
+    categories = models.ForeignKey(categories, null=True, on_delete=models.SET_NULL, blank=True)
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='user')
     name = models.CharField(max_length=50)
-    description = models.CharField(max_length=150)
-    venue = models.CharField(max_length=100)
+    description = models.CharField(max_length=5000)
+    venue = models.CharField(max_length=500)
     city = models.CharField(max_length=20)
     state = models.CharField(max_length=20)
-    # registered_users = models.ForeignKey(regUser, related_name='registered_user',null=True,blank=True,on_delete=models.CASCADE)
     private = models.BooleanField(default=False)
     start_date = models.DateField(default = p.now())
     start_time = models.TimeField()
@@ -25,6 +30,10 @@ class event(models.Model):
 
     def __str__(self):
         return self.name
+
+    def clean(self):
+        if self.end_date < self.start_date or ((self.end_date == self.start_date) and self.end_time <= self.start_time):
+            raise ValidationError('Ending must be after starting')
 
 
 class regUser(models.Model):
@@ -36,6 +45,7 @@ class regUser(models.Model):
 
 class event_archive(models.Model):
     id = models.PositiveIntegerField(primary_key=True)
+    categories = models.ForeignKey(categories, null=True, on_delete=models.SET_NULL, blank=True)
     created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     ev_name = models.CharField(max_length=50)
     ev_description = models.CharField(max_length=150)

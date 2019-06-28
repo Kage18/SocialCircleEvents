@@ -4,9 +4,8 @@ from django.contrib.auth.models import User
 
 
 class Group(models.Model):  
-
-    name = models.CharField(max_length=50)
-    description = models.CharField(max_length=150)
+    name = models.CharField(max_length=100)
+    description = models.CharField(max_length=5000)
     creator = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     members = models.ManyToManyField(User, blank=True, related_name='members')
 
@@ -17,7 +16,7 @@ class Group_invite(models.Model):
 
     group = models.ForeignKey(Group, null=True, on_delete=models.CASCADE)
     to = models.ForeignKey(User, related_name="invitedtogroup",null=True,  blank=True, on_delete=models.CASCADE)
-    status = models.BooleanField(default=False)
+    status = models.IntegerField(default=0)
 
     def __str__(self):
         return self.group.name + " " + self.to.username
